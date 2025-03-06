@@ -1,63 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
 
-    <style>
-            *{
+  <style>
+    * {
         box-sizing: border-box;
-        }
+      }
 
-        body{
-            display: flex;
-            padding: 0;
-            margin: 0;
-            background-color: gainsboro;
-            flex-direction: column;
-            gap: 10px;
-        }
+      body{
+        display: flex;
+        padding: 0;
+        margin: 0;
+        background-color: gainsboro;
+        flex-direction: column;
+        gap: 10px;
+      }
 
-        nav {
-            padding: 10px;
-            color: white;
-            font-size: 25px;
-            font-weight: bold;
-            font-family: monospace;
-            background-color: blue;
-            display: flex;
-            flex-grow: 1;
-            box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.31);
-        }
+      nav {
+        padding: 10px;
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        font-family: monospace;
+        background-color: blue;
+        display: flex;
+        flex-grow: 1;
+        box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.31);
+      }
 
-        main{
-            margin-right: auto;
-            margin-left: auto;
-            width: 95vw;
-            display: flex;
-            flex-grow: 10;
-            flex-direction: column;
-            gap: 5px;
-        }
+      thead{
+        border-bottom: 1px solid black;
+      }
 
-        section{
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;      
-        }
+      main{
+        margin-right: auto;
+        margin-left: auto;
+        width: 95vw;
+        display: flex;
+        flex-grow: 10;
+        flex-direction: column;
+        gap: 5px;
+      }
 
-        .card{
-      border-radius: 2px;
-      background-color: white;
-      font-size: 0.7em;
-      padding: 8px;
-      box-shadow: -11px 9px 5px -4px rgba(0,0,0,0.31);
-      border: 1px solid gainsboro;
-    }
+      section{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;      
+      }
+
+
+      .card{
+        border-radius: 2px;
+        background-color: white;
+        font-size: 0.7em;
+        padding: 8px;
+        box-shadow: -11px 9px 5px -4px rgba(0,0,0,0.31);
+        border: 1px solid gainsboro;
+      }
+
+      button{
+        border: 1px solid grey;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+    tr:nth-child(even){background-color: #f2f2f2;}
+
+     button:hover{
+       background-color: white;
+     }
 
     table{
-      border-collapse: collapse; //removes the default table borders
+      border-collapse: collapse;
     }
 
     thead, th{
@@ -72,92 +90,116 @@
       text-align: center;
     }
 
-    tr:nth-child(even){
-      background-color: #f2f2f2;
-    }
-
     tr:hover {
       background-color: #ddd;
-      cursor: pointer;
     }
 
-    table img{
+    img{
       height: 100px;
     }
 
-    </style>
-</head>
-<body>
-    <nav>
-        Amiibo App
-      </nav>
-      <main>
-      
-        <section class="card">
-        </section>
-    
-        <table class="card">
-         <thead>
-            <tr>
-             <th>Name</th>
-             <th>Series</th>
-             <th>Image</th>
-             <th>Release</th>
-           </tr>
-         </thead>
-         <tbody id="result">
-           <tr>
-             <td>Mario</td>
-             <td>Super Mario</td>
-             <td>
-               <img src="https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/images/icon_00000000-00000002.png">
-             </td>
-             <td>
-               2014-11-21
-             </td>
-           </tr>
-         </tbody>
-        
-        </table>
-    </main>
-
-        <script>
-            function drawTable(records){
+  </style>
   
-            let result = document.querySelector('#result'); //get render target
-            
-            //build html string based on data
-            let html='';
+</head>
 
-            for(let rec of records){
-                //interpolate data into template
-                    html+=`<tr>
-                    <td>${rec.character}</td>
-                    <td>${rec.gameSeries}</td>
-                    <td>
-                    <img src="${rec.image}">
-                    </td>
-                    <td>
-                    ${rec.release.na}
-                    </td>
-                </tr>`;
-                }
-                
-                //add html string to the DOM
-            result.innerHTML = html;
-            }
+<body>
+  <nav>
+    Amiibo App
+  </nav>
 
-            async function getData(){
-            const response = await fetch('https:weblabs.web.app/data/amiibo.json');
-            const data = await response.json();
-            drawTable(data.amiibo.slice(0, 100)); 
-            //slice method is used to use the first 100 records
-            }
+  <main>
+    
+    <section class="card">
+        <button onclick="filterBySeries('Animal Crossing')">
+          Animal Crossing
+        </button>
+    
+        <button onclick="filterBySeries('Breath of the Wild')">
+          Breath of the Wild
+        </button>
+    
+        <button onclick="filterBySeries('Super Mario')">
+          Super Mario
+        </button>
+      </section>
 
-            getData();
-
-        </script>
-     
+   <table class="card">
+     <thead>
+        <tr>
+         <th>Name</th>
+         <th>Series</th>
+         <th>Image</th>
+         <th>Release</th>
+       </tr>
+     </thead>
+     <tbody id="result">
        
+     </tbody>
+
+   </table>
+    
+    
+  </main>
+
+
+  <script>
+
+    function drawTable(records){
+      console.log('hello', records);
+      let html='';
+      let result = document.querySelector('#result');
+
+      let count = 0;
+      
+      for(let rec of records){
+        html+=`<tr>
+         <td>${rec.character}</td>
+         <td>${rec.gameSeries}</td>
+         <td>
+           <img src="${rec.image}">
+         </td>
+         <td>
+           ${rec.release.na}
+         </td>
+       </tr>`;
+        count++;
+        if (count > 100) break;
+      }
+
+      result.innerHTML = html;
+    
+    }
+
+    let state = [];
+
+    async function getData(){
+      const response = await fetch('https://amiiboapi.com/api/amiibo/');
+      const data = await response.json();
+      return data.amiibo.slice(0, 100);//gets first 100 items (too much data)
+    }
+
+    async function showAllGames(){
+        state = await getData();
+        drawTable(state);
+    }
+
+    showAllGames();    
+
+    function filterBySeries(series){
+      
+      let filtered = [];
+      
+      for(let rec of state){
+        if (rec.gameSeries === series)
+          filtered.push(rec);
+      }
+      drawTable(filtered);
+    }
+
+
+
+    
+  </script>
 </body>
+
 </html>
